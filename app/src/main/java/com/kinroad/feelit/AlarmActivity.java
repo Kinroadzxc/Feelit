@@ -135,6 +135,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                                 ClockView.setPA = apChange(savedPA);
                             } else ClockView.setPA = savedPA;
                             ClockView.setHour = (savedHour + (int) hdegree / 360) % 12;
+
                             Log.d("时间", (int) ClockView.setHour + ":" + (int) ClockView.setMinute + " " + ClockView.setPA);
                             break;
                     }
@@ -159,7 +160,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.apply();
 
                 //显示提示
-                Toast.makeText(AlarmActivity.this, "闹钟已设定："+savedHour+String.format("s{0}",savedMinute ),Toast.LENGTH_SHORT).show();
+                Toast.makeText(AlarmActivity.this, "闹钟已设定："+savedHour+":"+savedMinute+" "+savedPA ,Toast.LENGTH_SHORT).show();
 
                 break;
         }
