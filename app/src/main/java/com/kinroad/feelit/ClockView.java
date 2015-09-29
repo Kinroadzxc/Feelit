@@ -58,8 +58,5 @@ public class ClockView extends View {
         canvas.rotate((float) hourRadian, heihgt / 2, width / 2);
         canvas.drawRoundRect(hour, 20, 20, paint);
         canvas.restore();
-
-        Log.d("saved time", AlarmActivity.savedHour + ":" + AlarmActivity.savedMinute + " "+ AlarmActivity.savedPA);
-        Log.d("show angle", String.valueOf(hourRadian)+"+"+String.valueOf(minuteRadian));
     }
 }
