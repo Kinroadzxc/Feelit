@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Feelit</string>
+    <string name="title_activity_index">Feelit</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="feelit">Feelit</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+</resources>
