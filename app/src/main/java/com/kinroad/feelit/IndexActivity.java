@@ -9,7 +9,6 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 
-
 public class IndexActivity extends Activity implements OnGestureListener {
 
     private GestureDetector detector;
