@@ -30,8 +30,10 @@ public class ClockView extends View {
         screenHeight = displayMetrics.heightPixels;
         width = (int) (displayMetrics.density * 300);
         heihgt = width;
-        hour = new RectF(width/2-15, (int)(heihgt*3/16), width/2+15, heihgt/2);
-        minute = new RectF(width/2, heihgt/2-15, (int)(width*11/16), heihgt/2+15);
+        hour = new RectF(width/2-15, heihgt*6/16,
+                width/2+15, heihgt/2);
+        minute = new RectF(width/2-15, heihgt*3/16,
+                width/2+15, heihgt/2);
     }
 
     @Override
