@@ -157,7 +157,8 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.putString("p_a", savedPA);
                 editor.apply();
 
-
+                //显示提示
+                
 
                 break;
         }
