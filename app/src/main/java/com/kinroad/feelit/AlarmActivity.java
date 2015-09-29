@@ -59,6 +59,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
     @Override//侦测触摸事件
     public boolean onTouchEvent(MotionEvent event) {
 
+        //刷新显示
+        setContentView(R.layout.activity_alarm);
+
         switch (event.getAction()) {
 
             //按下手指
@@ -70,10 +73,10 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
                 //判断手指是否在表盘内按下
                 double r = Math.sqrt(Math.pow(xd, 2.0) + Math.pow(yd, 2.0));
-                if (r < 260) {
+                if (r < 240) {
                     gestureFlag = 1;
                     initGama();
-                } else if (r >= 260 && r <= 480) {
+                } else if (r >= 240 && r <= 420) {
                     gestureFlag = 2;
                     initGama();
                 } else gestureFlag = 0;
@@ -153,6 +156,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.putInt("minute", savedMinute);
                 editor.putString("p_a", savedPA);
                 editor.apply();
+
+
+
                 break;
         }
 

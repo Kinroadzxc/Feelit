@@ -44,7 +44,7 @@ public class ClockView extends View {
 
         //获取时针分针角度
         minuteRadian = setMinute * 6.0;
-        hourRadian = setHour * 30.0;
+        hourRadian = (setHour+setMinute/60) * 30.0;
 
         //绘制分针
         canvas.save();
