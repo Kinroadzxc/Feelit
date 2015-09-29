@@ -134,8 +134,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                             Log.d("时间", (int) ClockView.setHour + ":" + (int) ClockView.setMinute + " " + ClockView.setPA);
                             break;
                     }
-                    break;
                 }
+                break;
+
                 //移开手指
             case MotionEvent.ACTION_UP:
 

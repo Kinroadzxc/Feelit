@@ -30,7 +30,7 @@ public class ClockView extends View {
         screenHeight = displayMetrics.heightPixels;
         width = (int) (displayMetrics.density * 300);
         heihgt = width;
-        hour = new RectF(width/2-15, heihgt*6/16,
+        hour = new RectF(width/2-15, heihgt*5/16,
                 width/2+15, heihgt/2);
         minute = new RectF(width/2-15, heihgt*3/16,
                 width/2+15, heihgt/2);
@@ -47,8 +47,17 @@ public class ClockView extends View {
         minuteRadian = setMinute * 6.0;
         hourRadian = setHour * 30.0;
 
-        canvas.drawRoundRect(hour, 20, 20, paint);
+        //绘制分针
+        canvas.save();
+        canvas.rotate((float) minuteRadian, heihgt / 2, width / 2);
         canvas.drawRoundRect(minute, 20, 20, paint);
+        canvas.restore();
+
+        //绘制时针
+        canvas.save();
+        canvas.rotate((float) hourRadian, heihgt / 2, width / 2);
+        canvas.drawRoundRect(hour, 20, 20, paint);
+        canvas.restore();
 
         Log.d("saved time", AlarmActivity.savedHour + ":" + AlarmActivity.savedMinute + " "+ AlarmActivity.savedPA);
         Log.d("show angle", String.valueOf(hourRadian)+"+"+String.valueOf(minuteRadian));
