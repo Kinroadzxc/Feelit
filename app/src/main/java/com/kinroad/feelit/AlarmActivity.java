@@ -10,6 +10,7 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class AlarmActivity extends Activity implements OnGestureListener {
 
@@ -120,9 +121,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                         case 2:
 
                             //计算旋转角
-                            if ((gama - gamab) < -330) {
+                            if ((gama - gamab) < -350) {
                                 hdegree += 360 + gama - gamab;
-                            } else if ((gama - gamab) > 330) {
+                            } else if ((gama - gamab) > 350) {
                                 hdegree += gama - gamab - 360;
                             } else {
                                 hdegree += gama - gamab;
@@ -158,7 +159,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.apply();
 
                 //显示提示
-                
+                Toast.makeText(AlarmActivity.this, "闹钟已设定："+savedHour+String.format("s{0}",savedMinute ),Toast.LENGTH_SHORT).show();
 
                 break;
         }
