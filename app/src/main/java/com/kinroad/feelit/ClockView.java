@@ -13,10 +13,10 @@ import android.view.View;
 public class ClockView extends View {
 
     private Bitmap back;
-    public static int screenWidth,screenHeight,width,heihgt;
+    public static int screenWidth,screenHeight,width,heihgt,setHour,setMinute;
     private RectF hour,minute;
     //即时刷新的时、分、上下午
-    public static double minuteRadian,hourRadian,setHour,setMinute;
+    public static double minuteRadian,hourRadian;
     public static String setPA;
 
     public ClockView(Context context, AttributeSet attrs) {
@@ -44,7 +44,7 @@ public class ClockView extends View {
 
         //获取时针分针角度
         minuteRadian = setMinute * 6.0;
-        hourRadian = (setHour+setMinute/60) * 30.0;
+        hourRadian = (setHour+setMinute/60.0) * 30.0;
 
         //绘制分针
         canvas.save();

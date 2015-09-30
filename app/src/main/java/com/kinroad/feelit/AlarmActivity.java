@@ -16,8 +16,8 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
     private GestureDetector detector;
     float xd, yd, xm, ym, xu, yu;
-    double gama, gamab, hdegree, hdegreeb;
-    int gestureFlag = 0;
+    double gama, gamab, hdegree;
+    int gestureFlag = 0, downFlag = 0;
     //存储的时、分、上下午
     public static int savedHour, savedMinute;
     public static String savedPA;
@@ -31,10 +31,10 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
         //读取记录的时间
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        savedHour = pref.getInt("hour", 0);
-        savedMinute = pref.getInt("minute", 3);
+        savedHour = pref.getInt("hour", 12);
+        savedMinute = pref.getInt("minute", 15);
         savedPA = pref.getString("p_a", "A.M");
-        ClockView.setHour = savedHour + savedMinute / 60.0;
+        ClockView.setHour = savedHour % 12;
         ClockView.setMinute = savedMinute;
         ClockView.setPA = savedPA;
 
@@ -81,12 +81,12 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                     gestureFlag = 2;
                     initGama();
                 } else gestureFlag = 0;
+                downFlag = 1;
                 break;
 
             //移动手指
             case MotionEvent.ACTION_MOVE:
                 gamab = gama;
-                hdegreeb = hdegree;
                 xm = event.getX() - ClockView.screenWidth / 2;
                 ym = event.getY() - ClockView.screenHeight / 2;
 
@@ -107,23 +107,23 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                             //判断上下午变化
                             if ((gama - gamab) < -330) {
                                 ClockView.setPA = apChange(ClockView.setPA);
-                            } else if ((gama - gamab) > 330) {
+                            } else if ((gama - gamab) > 330 && downFlag == 0) {
                                 ClockView.setPA = apChange(ClockView.setPA);
                             }
 
                             //设置显示时、分
                             ClockView.setHour = (int) gama / 30;
                             ClockView.setMinute = (int) (2 * gama % 60);
-                            Log.d("时间", (int) ClockView.setHour + ":" + (int) ClockView.setMinute + " " + ClockView.setPA);
+                            Log.d("时间", ClockView.setHour + ":" + ClockView.setMinute + " " + ClockView.setPA);
                             break;
 
                         //分针主动，时针从动
                         case 2:
 
                             //计算旋转角
-                            if ((gama - gamab) < -350) {
+                            if ((gama - gamab) < -300) {
                                 hdegree += 360 + gama - gamab;
-                            } else if ((gama - gamab) > 350) {
+                            } else if (((gama - gamab) > 300) && downFlag == 0) {
                                 hdegree += gama - gamab - 360;
                             } else {
                                 hdegree += gama - gamab;
@@ -131,18 +131,26 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
                             //设置显示时、分
                             ClockView.setMinute = (int) (gama / 6);
-                            if (((savedHour + (int) hdegree / 360) / 12) % 2 == 1) {
+                            ClockView.setHour = (int) (savedHour % 12 + Math.floor(hdegree / 360.0));
+
+                            if (((ClockView.setHour / 12 % 2 == 1) && (ClockView.setHour > 0))
+                                    || ((ClockView.setHour / 12 % 2 == 0) && (ClockView.setHour < 0))) {
                                 ClockView.setPA = apChange(savedPA);
                             } else ClockView.setPA = savedPA;
-                            ClockView.setHour = (savedHour + (int) hdegree / 360) % 12;
+                            while (ClockView.setHour < 0||ClockView.setHour>12){
+                                if (ClockView.setHour<0) ClockView.setHour += 12;
+                                if (ClockView.setHour>12) ClockView.setHour -= 12;
+                            }
 
-                            Log.d("时间", (int) ClockView.setHour + ":" + (int) ClockView.setMinute + " " + ClockView.setPA);
+
+                            Log.d("时间", ClockView.setHour + ":" + ClockView.setMinute + " " + ClockView.setPA);
                             break;
                     }
+                    if (downFlag == 1) downFlag = 0;
                 }
                 break;
 
-                //移开手指
+            //移开手指
             case MotionEvent.ACTION_UP:
 
                 //记录手指离开位置与表盘中心差值
@@ -151,8 +159,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
                 //存储设置的时间
                 savedPA = ClockView.setPA;
-                savedHour = (int) ClockView.setHour;
-                savedMinute = (int) ClockView.setMinute;
+                if (ClockView.setHour == 0) savedHour = 12;
+                else savedHour = ClockView.setHour;
+                savedMinute = ClockView.setMinute;
                 SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                 editor.putInt("hour", savedHour);
                 editor.putInt("minute", savedMinute);
@@ -160,7 +169,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.apply();
 
                 //显示提示
-                Toast.makeText(AlarmActivity.this, "闹钟已设定："+savedHour+":"+savedMinute+" "+savedPA ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(AlarmActivity.this, String.format("闹钟已设定： %d:%02d %s",savedHour,savedMinute,savedPA) , Toast.LENGTH_SHORT).show();
 
                 break;
         }
@@ -251,7 +260,6 @@ public class AlarmActivity extends Activity implements OnGestureListener {
     //初始化角度缓存
     private void initGama() {
         hdegree = 0.0;
-        hdegreeb = 0.0;
         gama = 0.0;
         gamab = 0.0;
     }
