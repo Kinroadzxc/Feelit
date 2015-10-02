@@ -32,11 +32,6 @@ public class AlarmActivity extends Activity implements OnGestureListener {
         //初始化手势侦听器
         detector = new GestureDetector(this);
 
-        //读取记录的时间
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        savedHour = pref.getInt("hour", 12);
-        savedMinute = pref.getInt("minute", 15);
-        savedPA = pref.getString("p_a", "A.M");
         ClockView.setHour = savedHour % 12;
         ClockView.setMinute = savedMinute;
         ClockView.setPA = savedPA;
@@ -170,6 +165,10 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.putInt("minute", savedMinute);
                 editor.putString("p_a", savedPA);
                 editor.apply();
+
+                //开启闹钟
+                MainService.savedAlarmOn = true;
+                MainService.start(AlarmActivity.this);
 
                 //显示提示
                 Toast.makeText(AlarmActivity.this, String.format("闹钟已设定： %d:%02d %s",savedHour,savedMinute,savedPA) , Toast.LENGTH_SHORT).show();
