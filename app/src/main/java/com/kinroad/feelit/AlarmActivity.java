@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -21,10 +22,18 @@ public class AlarmActivity extends Activity implements OnGestureListener {
     //存储的时、分、上下午
     public static int savedHour, savedMinute;
     public static String savedPA;
+    public static float screenScale, screenWidth, screenHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //识别屏幕比例
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        displayMetrics = getResources().getDisplayMetrics();
+        screenScale = displayMetrics.density;
+        screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
 
         //加入AppController列表
         AppController.addActivity(this);
@@ -38,6 +47,11 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
         //配置xml显示
         setContentView(R.layout.activity_alarm);
+
+        //显示提示
+        if (IndexActivity.needGuidence){
+        Toast.makeText(AlarmActivity.this, "拨动时针或分针\n以设置闹钟时间" , Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override//侦测物理按键
@@ -67,15 +81,15 @@ public class AlarmActivity extends Activity implements OnGestureListener {
             case MotionEvent.ACTION_DOWN:
 
                 //记录手指离开位置与表盘中心差值
-                xd = event.getX() - ClockView.screenWidth / 2;
-                yd = event.getY() - ClockView.screenHeight / 2;
+                xd = event.getX() - ClockView.centerX;
+                yd = event.getY() - ClockView.centerY;
 
                 //判断手指是否在表盘内按下
                 double r = Math.sqrt(Math.pow(xd, 2.0) + Math.pow(yd, 2.0));
-                if (r < 240) {
+                if (r < screenHeight*11/128.0) {
                     gestureFlag = 1;
                     initGama();
-                } else if (r >= 240 && r <= 420) {
+                } else if (r >= screenHeight*11/128.0 && r <= screenHeight*11/64.0) {
                     gestureFlag = 2;
                     initGama();
                 } else gestureFlag = 0;
@@ -85,8 +99,8 @@ public class AlarmActivity extends Activity implements OnGestureListener {
             //移动手指
             case MotionEvent.ACTION_MOVE:
                 gamab = gama;
-                xm = event.getX() - ClockView.screenWidth / 2;
-                ym = event.getY() - ClockView.screenHeight / 2;
+                xm = event.getX() - ClockView.centerX;
+                ym = event.getY() - ClockView.centerY;
 
                 //如果在表盘内按下
                 if (gestureFlag == 1 || gestureFlag == 2) {
@@ -152,8 +166,8 @@ public class AlarmActivity extends Activity implements OnGestureListener {
             case MotionEvent.ACTION_UP:
 
                 //记录手指离开位置与表盘中心差值
-                xu = event.getX() - ClockView.screenWidth / 2;
-                yu = event.getY() - ClockView.screenHeight / 2;
+                xu = event.getX() - ClockView.centerX;
+                yu = event.getY() - ClockView.centerY;
 
                 //存储设置的时间
                 savedPA = ClockView.setPA;
@@ -164,6 +178,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.putInt("hour", savedHour);
                 editor.putInt("minute", savedMinute);
                 editor.putString("p_a", savedPA);
+                editor.putBoolean("needGuidence",false);
                 editor.apply();
 
                 //开启闹钟

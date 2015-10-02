@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class IndexActivity extends Activity implements OnGestureListener {
 
+    public static Boolean needGuidence;
     private GestureDetector detector;
 
     //设置与service的连接
@@ -42,10 +43,13 @@ public class IndexActivity extends Activity implements OnGestureListener {
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.apply();
 
+        //读取存储数据/若无则调用默认值
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
         AlarmActivity.savedHour = pref.getInt("hour", 7);
         AlarmActivity.savedMinute = pref.getInt("minute", 0);
         AlarmActivity.savedPA = pref.getString("p_a", "A.M");
+        IndexActivity.needGuidence = pref.getBoolean("needGuidence",true);
+
         //读取闹钟设置状态
         MainService.savedAlarmOn = pref.getBoolean("Alarm_on", false);
 
@@ -61,6 +65,11 @@ public class IndexActivity extends Activity implements OnGestureListener {
 
         //初始化手势侦听器
         detector = new GestureDetector(this);
+
+        //显示指示菜单
+        if (needGuidence){
+            Toast.makeText(IndexActivity.this, "上滑开/关闹钟\n\n下拉设置闹钟:)", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //启动此活动
@@ -115,8 +124,9 @@ public class IndexActivity extends Activity implements OnGestureListener {
 
         //向上滑
         if (e1.getY() > e2.getY()) {
-            //关闭或开启服务
+            //关闭或开启闹钟服务
             if (MainService.savedAlarmOn) {
+                //关闭
                 controlBinder.closeService();
                 MainService.savedAlarmOn = false;
 
@@ -129,6 +139,7 @@ public class IndexActivity extends Activity implements OnGestureListener {
                 Toast.makeText(IndexActivity.this, "闹钟已关闭", Toast.LENGTH_SHORT).show();
 
             }else {
+                //开启
                 MainService.start(IndexActivity.this);
                 MainService.savedAlarmOn = true;
 
@@ -150,7 +161,7 @@ public class IndexActivity extends Activity implements OnGestureListener {
         //与服务解除绑定
         unbindService(connection);
 
-        //保存闹钟状态
+        //保存闹钟开关设定
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.putBoolean("Alarm_on", MainService.savedAlarmOn);
         editor.apply();
