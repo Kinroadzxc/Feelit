@@ -40,7 +40,8 @@ public class ClockView extends View {
         super.onDraw(canvas);
 
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        if (setPA.equals("A.M")) paint.setColor(Color.WHITE);
+        else paint.setColor(Color.LTGRAY);
 
         //获取时针分针角度
         minuteRadian = setMinute * 6.0;

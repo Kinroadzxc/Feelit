@@ -5,7 +5,6 @@
     android:background="@drawable/alarmbgimage"
     tools:context="com.kinroad.feelit.AlarmActivity">
 
-
     <ImageView
         android:id="@+id/clockback"
         android:layout_width="300dp"

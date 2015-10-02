@@ -26,6 +26,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //加入AppController列表
+        AppController.addActivity(this);
+
         //初始化手势侦听器
         detector = new GestureDetector(this);
 
@@ -227,6 +230,14 @@ public class AlarmActivity extends Activity implements OnGestureListener {
             }
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //从AppController移除
+        AppController.removeActivity(this);
     }
 
     //已知与中心距离x,y的角度计算

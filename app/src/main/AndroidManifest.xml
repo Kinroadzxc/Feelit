@@ -9,8 +9,8 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name=".IndexActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_index" >
+            android:label="@string/title_activity_index"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,9 +19,15 @@
         </activity>
         <activity
             android:name=".AlarmActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_alarm" >
+            android:label="@string/title_activity_alarm"
+            android:launchMode="singleTask" >
         </activity>
+
+        <service
+            android:name=".MainService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

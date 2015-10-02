@@ -1,10 +1,14 @@
 package com.kinroad.feelit;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
@@ -13,10 +17,32 @@ public class IndexActivity extends Activity implements OnGestureListener {
 
     private GestureDetector detector;
 
+    //设置与service的连接
+    private MainService.ControlBinder controlBinder;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            controlBinder = (MainService.ControlBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
+
+        //绑定服务
+        Intent bindIntent = new Intent(this, MainService.class);
+        bindService(bindIntent, connection, BIND_AUTO_CREATE);
+        Log.d("绑定服务", "成功");
+
+        //加入AppController列表
+        AppController.addActivity(this);
 
         //初始化手势侦听器
         detector = new GestureDetector(this);
@@ -76,6 +102,26 @@ public class IndexActivity extends Activity implements OnGestureListener {
             return true;
         }
 
+        //向上滑
+        if (e1.getY() > e2.getY()) {
+            //关闭服务
+            if (MainService.isRunning) {
+                controlBinder.closeService();
+            }
+        }
+
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //关闭所有开启的activity
+        AppController.finishAll();
+
+        //与服务解除绑定
+        unbindService(connection);
+        Log.d("解除绑定", "成功");
     }
 }
