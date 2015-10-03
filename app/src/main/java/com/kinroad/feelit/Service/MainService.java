@@ -1,4 +1,4 @@
-package com.kinroad.feelit;
+package com.kinroad.feelit.Service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,15 +8,18 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.kinroad.feelit.Activity.AlarmActivity;
+import com.kinroad.feelit.Activity.WakeupActivity;
+
 import java.util.Calendar;
 
 public class MainService extends Service {
 
     public static boolean savedAlarmOn,serviceOn;
-    private ControlBinder cBinder = new ControlBinder();
+    public ControlBinder cBinder = new ControlBinder();
 
     //控制通道
-    class ControlBinder extends Binder {
+    public class ControlBinder extends Binder {
         //关闭服务
         public void closeService() {
             stopSelf();
@@ -53,6 +56,7 @@ public class MainService extends Service {
 
             //指定闹钟时间
             Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(System.currentTimeMillis());
             c.set(Calendar.SECOND, 0);
             c.set(Calendar.MINUTE, AlarmActivity.savedMinute);
             if (AlarmActivity.savedPA.equals("P.M")) AlarmActivity.savedHour +=12;

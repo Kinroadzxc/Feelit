@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kinroad.feelit" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,9 +14,10 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
-            android:name=".IndexActivity"
+            android:name=".Activity.IndexActivity"
             android:label="@string/title_activity_index"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,26 +25,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlarmActivity"
+            android:name=".Activity.AlarmActivity"
             android:label="@string/title_activity_alarm"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            tools:ignore="InnerclassSeparator">
         </activity>
 
         <service
-            android:name=".MainService"
+            android:name=".Service.MainService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true"
+            tools:ignore="InnerclassSeparator">
         </service>
 
         <activity
-            android:name=".WakeupActivity"
-            android:label="@string/title_activity_wakeup" >
+            android:name=".Activity.WakeupActivity"
+            android:label="@string/title_activity_wakeup"
+            tools:ignore="InnerclassSeparator">
         </activity>
 
         <receiver
-            android:name=".BootReceiver"
+            android:name=".Receiver.BootReceiver"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

@@ -1,4 +1,4 @@
-package com.kinroad.feelit;
+package com.kinroad.feelit.Activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
+import com.kinroad.feelit.CustomView.ClockView;
+import com.kinroad.feelit.R;
+import com.kinroad.feelit.Service.MainService;
+import com.kinroad.feelit.Util.AppController;
 
 public class AlarmActivity extends Activity implements OnGestureListener {
 
@@ -126,7 +130,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                             //设置显示时、分
                             ClockView.setHour = (int) gama / 30;
                             ClockView.setMinute = (int) (2 * gama % 60);
-                            Log.d("时间", ClockView.setHour + ":" + ClockView.setMinute + " " + ClockView.setPA);
+//                            Log.d("时间", ClockView.setHour + ":" + ClockView.setMinute + " " + ClockView.setPA);
                             break;
 
                         //分针主动，时针从动
@@ -155,7 +159,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                             }
 
 
-                            Log.d("时间", ClockView.setHour + ":" + ClockView.setMinute + " " + ClockView.setPA);
+//                            Log.d("时间", ClockView.setHour + ":" + ClockView.setMinute + " " + ClockView.setPA);
                             break;
                     }
                     if (downFlag == 1) downFlag = 0;

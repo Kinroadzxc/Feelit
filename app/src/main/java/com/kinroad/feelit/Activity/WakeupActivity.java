@@ -1,4 +1,4 @@
-package com.kinroad.feelit;
+package com.kinroad.feelit.Activity;
 
 import android.app.Activity;
 import android.app.Service;
@@ -10,6 +10,8 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import com.kinroad.feelit.R;
 
 public class WakeupActivity extends Activity implements OnGestureListener{
 

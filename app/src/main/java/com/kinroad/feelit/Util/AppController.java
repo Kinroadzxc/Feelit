@@ -1,4 +1,4 @@
-package com.kinroad.feelit;
+package com.kinroad.feelit.Util;
 
 import android.app.Activity;
 import android.app.Service;

@@ -1,4 +1,4 @@
-package com.kinroad.feelit;
+package com.kinroad.feelit.CustomView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
+
+import com.kinroad.feelit.Activity.AlarmActivity;
+import com.kinroad.feelit.R;
 
 public class ClockView extends View {
 
@@ -31,7 +33,7 @@ public class ClockView extends View {
 
         //载入时针分针图像
         Bitmap bitmapHour = BitmapFactory.decodeResource(this.getResources(), R.drawable.hour);
-        Bitmap bitmapminute = BitmapFactory.decodeResource(this.getResources(), R.drawable.minute);
+        Bitmap bitmapMinute = BitmapFactory.decodeResource(this.getResources(), R.drawable.minute);
 
         //载入画笔
         Paint paint = new Paint();
@@ -52,7 +54,7 @@ public class ClockView extends View {
         canvas.save();
         canvas.scale((float) (AlarmActivity.screenHeight / 1280.0 / 3), (float) (AlarmActivity.screenHeight / 1280.0 / 3));
         canvas.rotate((float) minuteRadian, 0, 0);
-        canvas.drawBitmap(bitmapminute, -60*AlarmActivity.screenScale, -175*AlarmActivity.screenScale, paint);
+        canvas.drawBitmap(bitmapMinute, -60*AlarmActivity.screenScale, -175*AlarmActivity.screenScale, paint);
         canvas.restore();
 
     }

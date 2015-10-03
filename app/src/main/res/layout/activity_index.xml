@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/indeximage"
-    tools:context="com.kinroad.feelit.IndexActivity">
+    android:background="@drawable/index_image"
+    tools:context="com.kinroad.feelit.Activity.IndexActivity">
 
 
 </LinearLayout>

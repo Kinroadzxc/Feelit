@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.kinroad.feelit.AlarmActivity">
+    tools:context="com.kinroad.feelit.Activity.AlarmActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.kinroad.feelit.ClockView
+        <com.kinroad.feelit.CustomView.ClockView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"

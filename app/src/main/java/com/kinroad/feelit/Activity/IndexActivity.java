@@ -1,4 +1,4 @@
-package com.kinroad.feelit;
+package com.kinroad.feelit.Activity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -14,6 +14,10 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
+import com.kinroad.feelit.Util.AppController;
+import com.kinroad.feelit.Service.MainService;
+import com.kinroad.feelit.R;
 
 public class IndexActivity extends Activity implements OnGestureListener {
 
