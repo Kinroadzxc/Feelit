@@ -23,6 +23,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
     float xd, yd, xm, ym, xu, yu;
     double gama, gamab, hdegree;
     int gestureFlag = 0, downFlag = 0;
+
     //存储的时、分、上下午
     public static int savedHour, savedMinute;
     public static String savedPA;
@@ -182,7 +183,7 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 editor.putInt("hour", savedHour);
                 editor.putInt("minute", savedMinute);
                 editor.putString("p_a", savedPA);
-                editor.putBoolean("needGuidence",false);
+                editor.putBoolean("needGuidence", false);
                 editor.apply();
 
                 //开启闹钟

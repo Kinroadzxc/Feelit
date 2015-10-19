@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 
 import com.kinroad.feelit.R;
+import com.kinroad.feelit.Service.MainService;
 
 public class WakeupActivity extends Activity implements OnGestureListener{
 
@@ -22,6 +23,9 @@ public class WakeupActivity extends Activity implements OnGestureListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //设置下一次闹钟
+        MainService.start(WakeupActivity.this);
 
         //激活屏幕
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);

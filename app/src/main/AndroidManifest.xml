@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +16,7 @@
             android:name=".Activity.IndexActivity"
             android:label="@string/title_activity_index"
             android:launchMode="singleTask"
-            tools:ignore="InnerclassSeparator">
+            tools:ignore="InnerclassSeparator" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,31 +27,37 @@
             android:name=".Activity.AlarmActivity"
             android:label="@string/title_activity_alarm"
             android:launchMode="singleTask"
-            tools:ignore="InnerclassSeparator">
+            tools:ignore="InnerclassSeparator" >
         </activity>
 
         <service
             android:name=".Service.MainService"
             android:enabled="true"
             android:exported="true"
-            tools:ignore="InnerclassSeparator">
+            tools:ignore="InnerclassSeparator" >
         </service>
 
         <activity
             android:name=".Activity.WakeupActivity"
             android:label="@string/title_activity_wakeup"
-            tools:ignore="InnerclassSeparator">
+            tools:ignore="InnerclassSeparator" >
         </activity>
 
         <receiver
             android:name=".Receiver.BootReceiver"
             android:enabled="true"
             android:exported="true"
-            tools:ignore="InnerclassSeparator">
+            tools:ignore="InnerclassSeparator" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".Activity.WeatherActivity"
+            android:label="@string/title_activity_weather" >
+        </activity>
+
     </application>
 
 </manifest>

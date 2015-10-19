@@ -22,6 +22,7 @@ import com.kinroad.feelit.R;
 public class IndexActivity extends Activity implements OnGestureListener {
 
     public static Boolean needGuidence;
+
     private GestureDetector detector;
 
     //设置与service的连接

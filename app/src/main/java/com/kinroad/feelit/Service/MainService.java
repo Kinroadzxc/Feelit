@@ -17,6 +17,7 @@ public class MainService extends Service {
 
     public static boolean savedAlarmOn,serviceOn;
     public ControlBinder cBinder = new ControlBinder();
+    public static long triggerAtTime;
 
     //控制通道
     public class ControlBinder extends Binder {
@@ -49,12 +50,11 @@ public class MainService extends Service {
 
         //初始化闹钟
         if (savedAlarmOn) {
-
             AlarmManager alarmmanager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent alarmIntent = new Intent(this, WakeupActivity.class);
             PendingIntent alarmPi = PendingIntent.getActivity(this, 0, alarmIntent, 0);
 
-            //指定闹钟时间
+            //指定下次闹钟时间
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(System.currentTimeMillis());
             c.set(Calendar.SECOND, 0);
@@ -62,8 +62,17 @@ public class MainService extends Service {
             if (AlarmActivity.savedPA.equals("P.M")) AlarmActivity.savedHour +=12;
             c.set(Calendar.HOUR_OF_DAY, AlarmActivity.savedHour);
 
+            triggerAtTime = c.getTimeInMillis();
+            final long LATERTIME = 1000*60*60*24;
+            if (triggerAtTime <= System.currentTimeMillis()) {
+                triggerAtTime += LATERTIME;
+            }
+
             //AlarmManager在指定时间启动Activity
-            alarmmanager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 1000*60*60*24, alarmPi);
+            alarmmanager.set(AlarmManager.RTC_WAKEUP, triggerAtTime, alarmPi);
+//            Log.d("现在系统时间", String.valueOf(System.currentTimeMillis()));
+//            Log.d("闹钟设定时间", String.valueOf(triggerAtTime));
+//            Log.d("闹钟设置", "已重新设置");
         }
 
         return super.onStartCommand(intent, flags, startId);
