@@ -22,9 +22,9 @@ public class ClockView extends View {
     public ClockView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        //获取中心区域宽高
-        centerX = AlarmActivity.screenWidth*409/800;
-        centerY = (float) (AlarmActivity.screenHeight*453.5/1280);
+        //获取中心坐标
+        centerX = (float) (AlarmActivity.screenWidth*410.5/800);
+        centerY = (float) (AlarmActivity.screenHeight*446.5/1280);
     }
 
     @Override

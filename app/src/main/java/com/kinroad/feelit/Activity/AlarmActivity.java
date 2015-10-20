@@ -55,7 +55,8 @@ public class AlarmActivity extends Activity implements OnGestureListener {
 
         //显示提示
         if (IndexActivity.needGuidence){
-        Toast.makeText(AlarmActivity.this, "拨动时针或分针\n以设置闹钟时间" , Toast.LENGTH_SHORT).show();
+        Toast.makeText(AlarmActivity.this, "拨动时针或分针\n以设置闹钟时间" , Toast.LENGTH_LONG).show();
+            IndexActivity.needGuidence = false;
         }
     }
 
@@ -191,8 +192,9 @@ public class AlarmActivity extends Activity implements OnGestureListener {
                 MainService.start(AlarmActivity.this);
 
                 //显示提示
-                Toast.makeText(AlarmActivity.this, String.format("闹钟已设定： %d:%02d %s",savedHour,savedMinute,savedPA) , Toast.LENGTH_SHORT).show();
-
+                if (gestureFlag == 1 || gestureFlag == 2) {
+                    Toast.makeText(AlarmActivity.this, String.format("闹钟已设定： %d:%02d %s", savedHour, savedMinute, savedPA), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
 

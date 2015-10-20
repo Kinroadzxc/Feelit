@@ -15,9 +15,9 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-import com.kinroad.feelit.Util.AppController;
-import com.kinroad.feelit.Service.MainService;
 import com.kinroad.feelit.R;
+import com.kinroad.feelit.Service.MainService;
+import com.kinroad.feelit.Util.AppController;
 
 public class IndexActivity extends Activity implements OnGestureListener {
 
@@ -53,7 +53,7 @@ public class IndexActivity extends Activity implements OnGestureListener {
         AlarmActivity.savedHour = pref.getInt("hour", 7);
         AlarmActivity.savedMinute = pref.getInt("minute", 0);
         AlarmActivity.savedPA = pref.getString("p_a", "A.M");
-        IndexActivity.needGuidence = pref.getBoolean("needGuidence",true);
+        IndexActivity.needGuidence = pref.getBoolean("needGuidence", true);
 
         //读取闹钟设置状态
         MainService.savedAlarmOn = pref.getBoolean("Alarm_on", false);
@@ -72,8 +72,8 @@ public class IndexActivity extends Activity implements OnGestureListener {
         detector = new GestureDetector(this);
 
         //显示指示菜单
-        if (needGuidence){
-            Toast.makeText(IndexActivity.this, "上滑开/关闹钟\n\n下拉设置闹钟:)", Toast.LENGTH_SHORT).show();
+        if (needGuidence) {
+            Toast.makeText(IndexActivity.this, "上滑开/关闹钟\n\n下拉设置闹钟:)", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -117,7 +117,7 @@ public class IndexActivity extends Activity implements OnGestureListener {
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
         //向下滑
-        if (e1.getY() < e2.getY()) {
+        if ((e1.getY() < e2.getY()) && (Math.abs(e2.getX() - e1.getX()) < Math.abs(e2.getY() - e1.getY()))) {
 
             //进入闹钟页面
             AlarmActivity.start(IndexActivity.this);
@@ -128,7 +128,7 @@ public class IndexActivity extends Activity implements OnGestureListener {
         }
 
         //向上滑
-        if (e1.getY() > e2.getY()) {
+        if ((e1.getY() > e2.getY()) && (Math.abs(e2.getX() - e1.getX()) < Math.abs(e2.getY() - e1.getY()))) {
             //关闭或开启闹钟服务
             if (MainService.savedAlarmOn) {
                 //关闭
@@ -143,13 +143,22 @@ public class IndexActivity extends Activity implements OnGestureListener {
 
                 Toast.makeText(IndexActivity.this, "闹钟已关闭", Toast.LENGTH_SHORT).show();
 
-            }else {
+            } else {
                 //开启
                 MainService.start(IndexActivity.this);
                 MainService.savedAlarmOn = true;
 
                 Toast.makeText(IndexActivity.this, "闹钟已开启", Toast.LENGTH_SHORT).show();
             }
+            return true;
+        }
+
+        //向右滑
+        if ((e1.getX() < e2.getX())&&(Math.abs(e2.getX()-e1.getX()) > Math.abs(e2.getY()-e1.getY()))) {
+
+            //进入天气页面
+//            WeatherActivity.start(IndexActivity.this);
+
             return true;
         }
 

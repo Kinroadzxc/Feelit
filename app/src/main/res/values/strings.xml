@@ -9,4 +9,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_wakeup">WakeupActivity</string>
     <string name="title_activity_weather">WeatherActivity</string>
+    <string name="WakeUpText">闹钟响啦！！！！</string>
+    <string name="WakeUpHint1">(-｡-;)最近事多时间不够</string>
+    <string name="WakeUpHint2">所以这个页面是我先随便做的啦(￣▽￣)</string>
 </resources>

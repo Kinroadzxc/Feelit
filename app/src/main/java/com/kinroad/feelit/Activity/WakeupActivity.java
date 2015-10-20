@@ -2,6 +2,8 @@ package com.kinroad.feelit.Activity;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -18,6 +20,7 @@ public class WakeupActivity extends Activity implements OnGestureListener{
 
     private Vibrator vibrator;
     private GestureDetector detector;
+    private int currentVolume,maxVolume;
     MediaPlayer alarmRing;
 
     @Override
@@ -35,6 +38,12 @@ public class WakeupActivity extends Activity implements OnGestureListener{
 
         //初始化手势侦听器
         detector = new GestureDetector(this);
+
+        //设置固定媒体音量-作为闹钟音量
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume/2+1, AudioManager.FLAG_ALLOW_RINGER_MODES);
 
         //播放铃声
         alarmRing = MediaPlayer.create(this, R.raw.alarm_ring);
@@ -108,5 +117,9 @@ public class WakeupActivity extends Activity implements OnGestureListener{
         super.onDestroy();
         alarmRing.stop();
         vibrator.cancel();
+
+        //恢复用户媒体音量
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_ALLOW_RINGER_MODES);
     }
 }
